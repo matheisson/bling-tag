@@ -27,7 +27,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'App_Profile.AppProfileConfig',
     'Static.StaticConfig',
-    'App_Stock.AppStockConfig'
+    'App_Stock.AppStockConfig',
+    'django_crontab'
+]
+
+CRONJOBS = [
+    ('*/1 * * * *', '_Jobs.update_stocks.run_updates', '>>/tmp/scheduled_job.log')
 ]
 
 MIDDLEWARE = [
