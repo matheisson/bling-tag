@@ -70,9 +70,6 @@ class Signup extends AppComponent {
   render() {
     return (
       <div className={"signup-component-container"}>
-        <div className={"intro-container"}>
-          <Intro open={()=>this.openPage("https://github.com/tbalint19/ultimate_bp")}/>
-        </div>
         <div className={"signup-container"}>
           <div className={"card" + (this.pendingSignup ? " in-transition" : "")}>
             <Title/>

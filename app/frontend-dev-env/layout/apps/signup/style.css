@@ -1,8 +1,4 @@
-.signup-component-container {
-  display: flex;
-}
-
-@media screen and (min-width: 1150px) {
+@media screen and (max-width: 550px) {
   .intro-container {
     width: 600px;
     padding: 20px;
@@ -11,19 +7,19 @@
   }
 
   .signup-container {
-    width: 500px;
+    width: 100%;
     padding: 70px;
     padding-top: 40px;
   }
 
   .signup-input-container {
-    width: 360px;
+    width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
   }
 
   .signup-input {
-    width: 300px;
+    width: 80%;
     margin-bottom: 0;
   }
 

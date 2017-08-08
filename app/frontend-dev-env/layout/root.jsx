@@ -18,8 +18,6 @@ class Layout extends React.Component{
       <div className="app">
         <ViewDependencies/>
 
-        <div>Bela</div>
-
         <NavBar appManager={appManager}/>
         {/* Apps */}
         {state.app == "init" && <Init appManager={appManager}/>}
