@@ -1,0 +1,23 @@
+.in-transition {
+  animation: fadeToTransition 0.5s ease-in forwards;
+}
+
+@keyframes fadeToTransition {
+  0% {opacity: 1;}
+  100% {opacity: 0.2;}
+}
+
+.loading {
+  text-align: center;
+  opacity: 0.2;
+}
+
+.loading-circle {
+  animation: loadingCircle 100s forwards;
+  animation-iteration-count: infinite;
+}
+
+@keyframes loadingCircle {
+  0% {transform: rotateZ(0deg);}
+  100% {transform: rotateZ(36000deg);}
+}
