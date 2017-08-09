@@ -5,7 +5,7 @@ class Footer extends AppComponent {
   render() {
     return (
       <div className={"footer-container"}>
-        <div>a Toth Balint production | 2017</div>
+        <div>2017</div>
       </div>
     )
   }

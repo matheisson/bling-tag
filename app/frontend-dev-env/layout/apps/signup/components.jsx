@@ -109,6 +109,14 @@ export const SignupButton = (props) => (
   </button>
 )
 
+export const TrialButton = (props) => (
+  <button
+    className={"default-button trial-button"}
+    onClick={()=>props.action()}>
+    Free trial&nbsp;&gt;&gt;
+  </button>
+)
+
 const Info = (props) => (
   <span className={"signup-input-" + props.severity}>
     {props.info}

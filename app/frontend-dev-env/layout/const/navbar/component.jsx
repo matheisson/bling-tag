@@ -22,27 +22,30 @@ class Navbar extends AppComponent {
     return (
       <div className={"navbar-container"}>
         <div className={"navbar-logo-container"}>
-          <i className="material-icons md-14 icon-align-left">build</i>
-          <span className={"logo-text"}>Boilerplate app</span>
+          <span className={"logo-text"}>Bling-tag</span>
         </div>
         {currentApp == "signup" && <div className={"navbar-login-container"}>
-          <input
-            className={"default-input"}
-            placeholder={"Username"}
-            onChange={(event)=>this.changeInputField("login.credential", event)}
-            value={credential}/>
-          <input
-            className={"default-input"}
-            placeholder={"Password"}
-            type={"password"}
-            onChange={(event)=>this.changeInputField("login.password", event)}
-            value={password}/>
-          <button className={"default-button login-button"} onClick={()=>this.requestLogin(credential, password)}
-            disabled={pendingLogin || credential.length < 6 || password.length < 6}>
+          <div className={"login-inputs"}>
+            <input
+              className={"default-input login-input"}
+              placeholder={"Username"}
+              onChange={(event)=>this.changeInputField("login.credential", event)}
+              value={credential}/>
+              <input
+                className={"default-input login-input"}
+                placeholder={"Password"}
+                type={"password"}
+                onChange={(event)=>this.changeInputField("login.password", event)}
+                value={password}/>
+          </div>
+          <div className={"login-button-container"}>
+            <button className={"default-button login-button"} onClick={()=>this.requestLogin(credential, password)}
+              disabled={pendingLogin || credential.length < 6 || password.length < 6}>
               {!pendingLogin ?
                 <span>Login&nbsp;&gt;&gt;</span> :
                 <span><i className={"material-icons md-14 loading-circle"}>data_usage</i></span>}
-          </button>
+              </button>
+          </div>
         </div>}
         {(currentApp != "signup" && currentApp != "init") && <div className={"navbar-controller-container"}>
           <button className={"default-button login-button"} onClick={()=>this.requestLogout()}

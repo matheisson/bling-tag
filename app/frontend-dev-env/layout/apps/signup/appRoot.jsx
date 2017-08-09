@@ -11,7 +11,8 @@ import {
   PasswordInputInfo,
   PasswordAgainInput,
   PasswordAgainInputInfo,
-  SignupButton
+  SignupButton,
+  TrialButton
 } from './components'
 
 class Signup extends AppComponent {
@@ -97,6 +98,9 @@ class Signup extends AppComponent {
             </div>
             <div className={"signup-button-container"}>
               <SignupButton active={this.signupIsPossible()} action={()=>this.requestSignup()}/>
+            </div>
+            <div className={"trial-button-container"}>
+              <TrialButton action={()=>this.getApp("home")}/>
             </div>
           </div>
         </div>
