@@ -44,7 +44,7 @@ class FirmManager(models.Manager):
 class Firm(models.Model):
 
     name = models.CharField(max_length=255)
-    stock_price = models.FloatField()
+    stock_price = models.FloatField(default=0)
     short_name = models.CharField(max_length=255)
     visibility = models.CharField(max_length=255)
 

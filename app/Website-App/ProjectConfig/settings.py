@@ -32,7 +32,7 @@ INSTALLED_APPS = [
 ]
 
 CRONJOBS = [
-    ('*/1 * * * *', '_Jobs.update_stocks.run_updates', '>>/tmp/scheduled_job.log')
+    ('*/1 * * * *', 'App_Stock.cron.run_updates')
 ]
 
 MIDDLEWARE = [
