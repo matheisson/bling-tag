@@ -1,4 +1,4 @@
-#from App_Stock.models import Firm
+from App_Stock.models import Firm
 
 
 def create_firms():
@@ -10,6 +10,11 @@ def create_firms():
 
         symbol = row[0]
         name = row[1].strip('"')
+
+        # firm = Firm()
+        # firm.name = name
+        # firm.short_name = symbol
+        # firm.save()
 
         print(symbol, name)
         i += 1
