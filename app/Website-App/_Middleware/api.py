@@ -10,7 +10,7 @@ class API:
         def decorate(view):
             def form_response(request):
                 # TODO - delete for production
-                # time.sleep(2)
+                time.sleep(2)
                 # - for testing purposes (loading masks)
                 if request.method != Expected.request_method:
                     return JsonResponse({}, status=404)

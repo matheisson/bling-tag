@@ -13,7 +13,7 @@ SECRET_KEY = 'dq$#rep7jzk)@dnd+hlmmo@s+qth736iquf!ajmv&jyp-p!g+4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.43', 'localhost']
 
 
 # Application definition
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
 ]
 
 CRONJOBS = [
-    ('*/1 * * * *', 'App_Stock.cron.run_updates')
+    ('*/1 * * * *', '_Jobs.update_stocks.run_updates')
 ]
 
 MIDDLEWARE = [

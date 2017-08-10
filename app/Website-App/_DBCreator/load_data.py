@@ -4,14 +4,14 @@
 def create_firms():
     file = open("sample_data.csv")
     i = 0
+
     for row in file:
         row = row.split(',')
 
         symbol = row[0]
-        name = row[1].strip('"').strip('"')
-        price = row[2]
+        name = row[1].strip('"')
 
-        print(symbol,name,price)
+        print(symbol, name)
         i += 1
         if i == 10:
             return
