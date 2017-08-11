@@ -1,13 +1,16 @@
-import { ProfileComponent } from './components/_index'
+import { ProfileComponent, HomeComponent, InitComponent, LoginComponent } from './components/_index'
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './_guards/_index';
 
 const appRoutes: Routes = [
-    {path: 'profile', component: ProfileComponent},
-    // {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+    { path: 'login', component: LoginComponent },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 
-    // {path: 'login', component: StartComponent},
+    { path: 'init', component: InitComponent },
 
-    {path: '**', redirectTo: 'profile'}
+    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+
+    { path: '**', redirectTo: '' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

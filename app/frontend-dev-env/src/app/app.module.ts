@@ -3,6 +3,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {routing} from './app.routing';
+import { AuthGuard } from './_guards/_index';
 import {
   DataTableModule,
   InputTextareaModule,
@@ -20,10 +21,15 @@ import { HttpClient } from './_httpclient/httpclient';
 import { AppComponent } from './app.component';
 import {
   NavBarComponent,
-  ProfileComponent
+  ProfileComponent,
+  InitComponent,
+  LoginComponent,
+  HomeComponent
 } from './components/_index'
 import {
-    UserService
+    UserService,
+    FirmService,
+    CommodityService
 } from './_services/_index';
 
 @NgModule({
@@ -44,12 +50,18 @@ import {
     declarations: [
         AppComponent,
         NavBarComponent,
-        ProfileComponent
+        ProfileComponent,
+        InitComponent,
+        LoginComponent,
+        HomeComponent
     ],
     providers: [
+        AuthGuard,
         GlobalEventsManager,
         HttpClient,
-        UserService
+        UserService,
+        FirmService,
+        CommodityService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

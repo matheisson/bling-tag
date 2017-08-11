@@ -15,12 +15,4 @@ export class UserService {
         return this.client.get('/api/profile/auth');
     }
 
-    public testGet(): Observable<DefaultResponse> {
-        return this.client.get('/api/profile/checkget');
-    }
-
-    public testPost(): Observable<DefaultResponse> {
-        return this.client.post('/api/profile/checkpost', {name: "bela"});
-    }
-
 }

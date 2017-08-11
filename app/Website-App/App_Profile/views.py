@@ -29,7 +29,7 @@ def logout_user(request):
 
 @API.endpoint(AuthRequest)
 def auth(request):
-    return {'is_successful': True}
+    return request.user
 
 
 @API.endpoint(UsernameCheckRequest)
