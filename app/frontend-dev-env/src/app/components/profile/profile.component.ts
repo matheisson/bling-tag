@@ -14,7 +14,19 @@ export class ProfileComponent{
           private eventsManager: GlobalEventsManager,
           private router: Router,
           private userService: UserService
-      ){
+    ){
           this.eventsManager.showNavBar(true);
-      }
+    }
+
+    triggerGet(){
+        this.userService.testGet().subscribe(
+            (data: any) => console.log(data)
+        )
+    }
+
+    triggerPost(){
+        this.userService.testPost().subscribe(
+            (data: any) => console.log(data)
+        )
+    }
 }
