@@ -48,7 +48,7 @@ def send_email(request):
         try:
             body = json.loads(request.body.decode("utf-8"))
             message = "My " + str(body['piece']) + " pieces of " + body['short_name'] + " share(s) " \
-                    "worth 20 " + body['commodity'] + "I invite You to try it as well!"
+                    "worth 20 " + body['commodity'] + " I invite You to try it as well!"
 
             send_mail(
                 "check it out",
