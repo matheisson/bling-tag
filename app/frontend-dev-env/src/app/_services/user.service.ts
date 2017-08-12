@@ -15,4 +15,12 @@ export class UserService {
         return this.client.get('/api/profile/auth');
     }
 
+    public signupUser(user: User): Observable<DefaultResponse> {
+        return this.client.post('/api/profile/signup', user)
+    }
+
+    public loginUser(user: User): Observable<DefaultResponse> {
+        return this.client.post('/api/profile/login', user)
+    }
+
 }

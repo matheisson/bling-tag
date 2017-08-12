@@ -1,3 +1,46 @@
 <div class="container">
-  Login
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-6 col-lg-6 block-container">
+      <div class="row no-mobile card intro-text">
+        <h4>Why us?</h4>
+        <p>Ever wondered how much hookers your IBM shares worth?</p>
+        <p>Search no more!</p>
+        <p>We tell you.</p>
+        <h4>How?</h4>
+        <p>Get your free trial without registration!</p>
+        <p>Registrate later for more commodities</p>
+        <p>Upgrade your profile for more firms.</p>
+      </div>
+      <div class="row button-container">
+        <button class="btn btn-success">
+          Free trial
+          <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-sm-6 col-lg-6 block-container">
+      Create your account in seconds
+      <div class="row input-container">
+        <input class="form-control" placeholder="Username" [(ngModel)]="user.username"/>
+      </div>
+      <div class="row input-container">
+        <input class="form-control" type="password" placeholder="Password" [(ngModel)]="user.password"/>
+      </div>
+      <div class="row button-container">
+        <button class="btn btn-success" (click)="requestLogin()">
+          Login
+          <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="row input-container">
+        <input class="form-control" type="password" placeholder="Password again" [(ngModel)]="user.passwordAgain"/>
+      </div>
+      <div class="row button-container">
+        <button class="btn btn-success" (click)="requestSignup()">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          Signup
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

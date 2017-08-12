@@ -1,4 +1,53 @@
 .container {
   background-color: white;
-  padding-top: 25px;
+  padding-top: 65px;
+}
+
+.card {
+  box-shadow: 0 0 10px #999;
+}
+
+.intro-text {
+
+}
+
+.input-container {
+  padding: 5px 45px;
+}
+
+.button-container {
+    padding: 5px 45px;
+    margin-bottom: 30px;
+}
+
+@media screen and (min-width: 450px) {
+  .block-container {
+    padding: 40px;
+  }
+
+  .button-container {
+    text-align: right;
+  }
+
+  .button-container button {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .block-container {
+    padding: 5px;
+  }
+
+  .no-mobile {
+    display: none;
+  }
+
+  .button-container {
+    text-align: center;
+  }
+
+  .button-container button {
+    width: 100%;
+  }
 }

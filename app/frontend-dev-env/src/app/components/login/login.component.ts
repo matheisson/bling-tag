@@ -11,14 +11,27 @@ import { UserService } from '../../_services/_index';
 })
 export class LoginComponent{
 
-    public user: User;
+    public user: User = new User();
 
     constructor(
           private eventsManager: GlobalEventsManager,
           private router: Router,
           private userService: UserService
     ){
-          this.eventsManager.showNavBar(false);
+          this.eventsManager.showNavBar(true);
           sessionStorage.setItem('loginSeen', 'true');
     }
+
+    requestLogin(){
+        this.userService.loginUser(this.user).subscribe(
+            (data: any) => console.log(data)
+        )
+    }
+
+    requestSignup(){
+        this.userService.signupUser(this.user).subscribe(
+            (data: any) => console.log(data)
+        )
+    }
+
 }

@@ -1,4 +1,3 @@
-from django.views.decorators.csrf import csrf_exempt
 from _Serializer.serializer import Serializer as S
 from django.http import JsonResponse
 import json
@@ -20,7 +19,7 @@ class API:
                     return JsonResponse({}, status=403)
                 if not cls.is_authenticated(request, Expected.auth_status):
                     return JsonResponse({}, status=401)
-                return JsonResponse(S.serialize(csrf_exempt(view)(request)))
+                return JsonResponse(S.serialize(view(request)))
             return form_response
         return decorate
 

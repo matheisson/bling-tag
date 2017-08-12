@@ -3,6 +3,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {routing} from './app.routing';
+import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './_guards/_index';
 import {
   DataTableModule,
@@ -21,7 +22,6 @@ import { HttpClient } from './_httpclient/httpclient';
 import { AppComponent } from './app.component';
 import {
   NavBarComponent,
-  ProfileComponent,
   InitComponent,
   LoginComponent,
   HomeComponent
@@ -40,6 +40,7 @@ import {
         routing,
         DataTableModule,
         InputTextareaModule,
+        FormsModule,
         PanelModule,
         DropdownModule,
         SharedModule,
@@ -50,7 +51,6 @@ import {
     declarations: [
         AppComponent,
         NavBarComponent,
-        ProfileComponent,
         InitComponent,
         LoginComponent,
         HomeComponent

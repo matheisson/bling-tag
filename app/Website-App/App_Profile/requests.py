@@ -9,7 +9,6 @@ class SignupRequest:
     def get_from_request(self, request):
         try:
             request.username = json.loads(request.body.decode('utf-8'))['username']
-            request.email = json.loads(request.body.decode('utf-8'))['email']
             request.password = json.loads(request.body.decode('utf-8'))['password']
             return request
         except:
@@ -23,7 +22,7 @@ class LoginRequest:
 
     def get_from_request(self, request):
         try:
-            request.credential = json.loads(request.body.decode('utf-8'))["credential"]
+            request.username = json.loads(request.body.decode('utf-8'))["username"]
             request.password = json.loads(request.body.decode('utf-8'))["password"]
             return request
         except:
