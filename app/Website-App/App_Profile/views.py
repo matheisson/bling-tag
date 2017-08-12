@@ -5,15 +5,15 @@ from _Middleware import API
 
 @API.endpoint(SignupRequest)
 def signup_user(request):
-    errors = Profile.objects.check_if_possible(request.username, request.email)
-    if not errors:
-        Profile.objects.create_profile(request.username, request.email, request.password)
-    return {'errors': errors}
+    is_occupied = Profile.objects.check_if_occupied(request.username)
+    if not is_occupied:
+        Profile.objects.create_profile(request.username, request.password)
+    return {'is_successful': is_occupied is False}
 
 
 @API.endpoint(LoginRequest)
 def login_user(request):
-    user = Profile.objects.authenticate_user(request, request.credential, request.password)
+    user = Profile.objects.authenticate_user(request, request.username, request.password)
     if user is not None:
         from django.contrib.auth import login
         login(request, user)
@@ -29,7 +29,7 @@ def logout_user(request):
 
 @API.endpoint(AuthRequest)
 def auth(request):
-    return {'is_successful': True}
+    return request.user
 
 
 @API.endpoint(UsernameCheckRequest)

@@ -13,6 +13,7 @@ class Commodity(models.Model):
     name = models.CharField(max_length=255)
     price = models.FloatField()
     picture_url = models.CharField(max_length=1000)
+    visibility = models.CharField(max_length=255)  # for free/ for registered/ for paid
 
     objects = CommodityManager()
 

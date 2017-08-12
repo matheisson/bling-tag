@@ -3,11 +3,12 @@ import {Http, Headers, RequestOptions, Response, ResponseContentType} from '@ang
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import Cookies from 'js-cookie';
 
 @Injectable()
 export class HttpClient {
 
-    private urlPrefix: string = 'http://localhost:8090';
+    private urlPrefix: string = 'http://localhost:8000';
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private _http: Http) {
@@ -24,8 +25,7 @@ export class HttpClient {
     }
 
     private enrich(): void {
-        const token = localStorage.getItem("adminAuthToken") == 'null' ? undefined : localStorage.getItem("adminAuthToken");
-        this.headers.set('Authorization', 'Bearer ' + token);
+        let csrftoken = Cookies.get('csrftoken');
     }
 
     private wrap(response: Observable<Response>) {

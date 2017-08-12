@@ -1,3 +1,26 @@
-.bling-tag-navbar {
-  background-color: yellow;
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-header {
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+@media screen and (max-width: 450px) {
+  .navbar-header {
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .navbar-brand {
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
