@@ -32,4 +32,4 @@ def get_5_firms(request):
 
 @API.endpoint(OneFirm)
 def find_by_name_and_symbol(request):
-    return {'firm': Firm.objects.find_one(request.firm_name, request.symbol)}
+    return {'firm': Firm.objects.get_or_none(name=request.firm_name, short_name=request.symbol)}
