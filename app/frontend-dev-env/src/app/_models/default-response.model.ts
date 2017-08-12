@@ -1,5 +1,5 @@
 export class DefaultResponse {
 
-  isSuccessful: boolean;
+  is_successful: boolean;
 
 }

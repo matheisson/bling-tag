@@ -18,7 +18,7 @@ export class InitComponent{
           private router: Router,
           private userService: UserService
     ){
-          this.eventsManager.showNavBar(false);
+          this.eventsManager.showNavBar(true);
           this.userService.getUser().subscribe(
               (user: User) => {
                   sessionStorage.setItem('user', JSON.stringify(user));

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from '@angular/router';
 import { GlobalEventsManager } from '../../_eventsmanager/global.eventsmanager';
-import { User } from "../../_models/_index";
+import { User, DefaultResponse, InfoMessage } from "../../_models/_index";
 import { UserService } from '../../_services/_index';
 
 @Component({
@@ -12,6 +12,7 @@ import { UserService } from '../../_services/_index';
 export class LoginComponent{
 
     public user: User = new User();
+    public messages: InfoMessage[] = [];
 
     constructor(
           private eventsManager: GlobalEventsManager,
@@ -24,14 +25,28 @@ export class LoginComponent{
 
     requestLogin(){
         this.userService.loginUser(this.user).subscribe(
-            (data: any) => console.log(data)
+            (response: DefaultResponse) => {
+                if (!response.is_successful) {
+                    this.messages.push(new InfoMessage("Error", "Invalid credentials", "error"));
+                }
+                console.log(response);
+            }
         )
     }
 
     requestSignup(){
         this.userService.signupUser(this.user).subscribe(
-            (data: any) => console.log(data)
+            (response: DefaultResponse) => {
+                if (!response.is_successful) {
+                    this.messages.push(new InfoMessage("Error", "Occupied username", "error"));
+                }
+                console.log(response);
+            }
         )
+    }
+
+    getHome(){
+        this.router.navigate(['']);
     }
 
 }
