@@ -37,7 +37,7 @@ class FirmManager(models.Manager):
 
         if user.profile.is_paid:
             return self.all()
-            
+
         if user.profile.is_in_trial_time:
             return self.filter(visibility__in=['for registered', 'for free'])
 
@@ -55,7 +55,6 @@ class Firm(models.Model):
     name = models.CharField(max_length=255)
     stock_price = models.FloatField(default=0)
     short_name = models.CharField(max_length=255)
-    visibility = models.CharField(max_length=255)
     is_basic = models.BooleanField(default=False)
 
     objects = FirmManager()
