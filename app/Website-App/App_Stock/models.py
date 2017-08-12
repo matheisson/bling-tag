@@ -15,6 +15,9 @@ class CommodityManager(models.Manager):
 
         return self.filter(visibility='for free')
 
+    def get_all(self, request):
+        return self.all()
+
 
 class Commodity(models.Model):
 
@@ -40,12 +43,19 @@ class FirmManager(models.Manager):
 
         return self.filter(visibility='for free')
 
+    def get_base_firms(self, request):
+        return self.filter(is_basic=True)
+
+    def find_one(self, name, symbol):
+        return self.get(name=name, short_name=symbol)
+
 
 class Firm(models.Model):
 
     name = models.CharField(max_length=255)
-    stock_price = models.FloatField()
+    stock_price = models.FloatField(default=0)
     short_name = models.CharField(max_length=255)
     visibility = models.CharField(max_length=255)
+    is_basic = models.BooleanField(default=False)
 
     objects = FirmManager()

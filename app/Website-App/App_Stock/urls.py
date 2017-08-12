@@ -3,6 +3,9 @@ from . import views
 
 urlpatterns = [
     url(r'^commodities$', views.get_commodities, name='get_commodities'),
-    url(r'^firm$', views.get_firms, name='get_firms'),
-
+    url(r'^firms$', views.get_firms, name='get_firms'),
+    url(r'^loader$', views.firms, name='create_firms'),
+    url(r'basefirms', views.get_5_firms, name='get_basic'),
+    url(r'^firm$', views.find_by_name_and_symbol, name='single_firm'),
+    url(r'^allcommodities$', views.get_all_commodities, name='all_commodities'),
 ]
