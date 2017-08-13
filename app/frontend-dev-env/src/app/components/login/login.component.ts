@@ -27,7 +27,8 @@ export class LoginComponent{
         this.userService.loginUser(this.user).subscribe(
             (response: any) => {
                 if (response["authToken"]){
-                    localStorage.setItem("auth-token", response["authToken"])
+                    localStorage.setItem("auth-token", response["authToken"]);
+                    this.getHome();
                 }
             }
         )
@@ -45,13 +46,8 @@ export class LoginComponent{
     }
 
     getHome(){
+        localStorage.setItem("user", JSON.stringify(new User()));
         this.router.navigate(['']);
-    }
-
-    getDetails(){
-        this.userService.getUser().subscribe(
-            (response: any) => console.log(response)
-        )
     }
 
 }

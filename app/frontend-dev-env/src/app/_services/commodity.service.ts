@@ -11,7 +11,7 @@ export class CommodityService {
     }
 
     public getCommodities(): Observable<Commodity[]> {
-        return this.client.get('/api/stock/commoditites');
+        return this.client.get('/api/stock/allcommodities');
     }
 
 }

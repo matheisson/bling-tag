@@ -20,8 +20,6 @@ class FirmRequest:
 
     def get_from_request(self, request):
         try:
-            request.firmname = request.GET['name']
-
             return request
         except:
             return None

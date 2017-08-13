@@ -2,3 +2,15 @@
   background-color: white;
   padding-top: 65px;
 }
+
+.one-firm {
+  margin: 10px;
+}
+
+.one-commodity {
+  margin: 10px;
+}
+
+.selected-firm {
+  background-color: green;
+}

@@ -1,3 +1,34 @@
 <div class="container">
-  Home
+  <h4>Firms:</h4>
+  <div class="firm-buttons">
+    <div *ngFor="let firm of firms" class="one-firm">
+      <button class="btn btn-success {{ isSelected(firm) }}" (click)="selectFirm(firm)">
+        {{ firm.name }}
+      </button>
+      <span>{{ firm.short_name }}</span>
+      <span>{{ firm.stock_price }}</span>
+    </div>
+  </div>
+  <div *ngIf="selectedFirm">
+    <input [(ngModel)]="numberOfShares" [disabled]="!isRegistered()"/>
+    <button (click)="getRandomResult()">Convert to random</button>
+    <button *ngIf="isRegistered()" (click)="getCommoditySelector()">Choose commodity</button>
+  </div>
+  <div class="commodity-buttons" *ngIf="commoditySelectorActive">
+    <div *ngFor="let commodity of commodities" class="one-commodity">
+      <button class="btn btn-success" (click)="getResult(commodity)">
+        {{ commodity.name }}
+      </button>
+    </div>
+  </div>
+  <div *ngIf="result">
+    <h4>What a deal would THAT be!</h4>
+    <p>
+      You could get {{ result.numberOfCommodities }} of {{ result.commodity.name }}s for
+      your {{ numberOfShares }} {{ result.firm.name }} shares.
+    </p>
+    <img src="result.commodity.picture_url" height="50" width="50">
+    <input placeholder="Send it to..."/><button>Send</button>
+    <button class="btn btn-success" (click)="restartProcess()">Restart</button>
+  </div>
 </div>

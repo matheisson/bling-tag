@@ -31,4 +31,4 @@ def logout_user(request):
 
 @API.endpoint(DetailsRequest)
 def user_details(request):
-    return {'profile': request.user.profile}
+    return request.user.profile
