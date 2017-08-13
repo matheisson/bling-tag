@@ -25,11 +25,10 @@ export class LoginComponent{
 
     requestLogin(){
         this.userService.loginUser(this.user).subscribe(
-            (response: DefaultResponse) => {
-                if (!response.is_successful) {
-                    this.messages.push(new InfoMessage("Error", "Invalid credentials", "error"));
+            (response: any) => {
+                if (response["authToken"]){
+                    localStorage.setItem("auth-token", response["authToken"])
                 }
-                console.log(response);
             }
         )
     }
@@ -47,6 +46,12 @@ export class LoginComponent{
 
     getHome(){
         this.router.navigate(['']);
+    }
+
+    getDetails(){
+        this.userService.getUser().subscribe(
+            (response: any) => console.log(response)
+        )
     }
 
 }

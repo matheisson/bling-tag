@@ -1,6 +1,7 @@
 from App_Profile.models import Profile
 from App_Profile.requests import *
 from _Middleware import API
+from _Auth_Service import AuthService
 
 
 @API.endpoint(SignupRequest)
@@ -15,9 +16,10 @@ def signup_user(request):
 def login_user(request):
     user = Profile.objects.authenticate_user(request, request.username, request.password)
     if user is not None:
-        from django.contrib.auth import login
-        login(request, user)
-    return {"is_successful": user is not None}
+        token = AuthService.create_token(user.username)
+    else:
+        token = None
+    return {"authToken": token}
 
 
 @API.endpoint(LogoutRequest)
@@ -25,21 +27,6 @@ def logout_user(request):
     from django.contrib.auth import logout
     logout(request)
     return {'is_successful': True}
-
-
-@API.endpoint(AuthRequest)
-def auth(request):
-    return request.user
-
-
-@API.endpoint(UsernameCheckRequest)
-def check_username(request):
-    return {'username_exists': Profile.objects.filter(user_obj__username=request.username).exists()}
-
-
-@API.endpoint(EmailCheckRequest)
-def check_email(request):
-    return {'email_exists': Profile.objects.filter(user_obj__email=request.email).exists()}
 
 
 @API.endpoint(DetailsRequest)

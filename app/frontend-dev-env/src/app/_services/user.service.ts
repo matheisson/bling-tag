@@ -12,7 +12,7 @@ export class UserService {
     }
 
     public getUser(): Observable<User> {
-        return this.client.get('/api/profile/auth');
+        return this.client.get('/api/profile/details');
     }
 
     public signupUser(user: User): Observable<DefaultResponse> {

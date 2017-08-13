@@ -25,7 +25,9 @@ export class HttpClient {
     }
 
     private enrich(): void {
-        let csrftoken = Cookies.get('csrftoken');
+        if (localStorage["auth-token"]){
+            this.headers.set('auth-token', localStorage["auth-token"]);
+        }
     }
 
     private wrap(response: Observable<Response>) {

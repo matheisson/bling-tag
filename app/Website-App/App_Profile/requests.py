@@ -41,41 +41,6 @@ class LogoutRequest:
             return None
 
 
-class AuthRequest:
-
-    auth_status = "user"
-    request_method = "GET"
-
-    def get_from_request(self, request):
-        try:
-            return request
-        except:
-            return None
-
-class UsernameCheckRequest:
-
-    auth_status = "public"
-    request_method = "GET"
-
-    def get_from_request(self, request):
-        try:
-            request.username = request.GET.get("username")
-            return request
-        except:
-            return None
-
-class EmailCheckRequest:
-
-    auth_status = "public"
-    request_method = "GET"
-
-    def get_from_request(self, request):
-        try:
-            request.email = request.GET.get("email")
-            return request
-        except:
-            return None
-
 class DetailsRequest:
 
     auth_status = "user"
