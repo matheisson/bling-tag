@@ -1,4 +1,9 @@
 import os
+import json
+
+
+with open('config.json') as json_data:
+    config = json.load(json_data)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,8 +62,8 @@ CORS_ORIGIN_WHITELIST = (
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = '*****' #my gmail password
-EMAIL_HOST_USER = '*****' #my gmail username
+EMAIL_HOST_PASSWORD = config['gmail_pass']
+EMAIL_HOST_USER = config['gmail_user']
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
@@ -111,9 +116,7 @@ WSGI_APPLICATION = 'ProjectConfig.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-import json
-with open('config.json') as json_data:
-    config = json.load(json_data)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

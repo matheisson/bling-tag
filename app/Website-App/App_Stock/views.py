@@ -47,8 +47,8 @@ def send_email(request):
     if request.method == 'POST':
         try:
             body = json.loads(request.body.decode("utf-8"))
-            message = "My " + str(body['piece']) + " pieces of " + body['short_name'] + " share(s) " \
-                    "worth 20 " + body['commodity'] + " I invite You to try it as well!"
+            message = body['username'] + " Sent this message to You from Bling tag: My " + str(body['piece']) + " pieces of " + body['short_name'] + " share(s) " \
+                "worth " + str(body['value']) + " " + body['commodity'] + " I invite You to try it as well!"
 
             send_mail(
                 "check it out",
