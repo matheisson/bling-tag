@@ -34,7 +34,7 @@ def create_firms():
 
         print(symbol + " " + name + " " + str(price))
 
-        Firm(id=id, name=name, short_name=symbol, stock_price=price, visibility="customer").save()
+        Firm(id=id, name=name, short_name=symbol, stock_price=price, is_basic=False).save()
 
         id += 1
 
