@@ -3,13 +3,13 @@ from App_Stock.requests import *
 from App_Stock.models import Commodity, Firm
 from django.http import JsonResponse
 from App_Stock._Jobs.load_data import create_firms
+from App_Stock._Jobs.update_stocks import run_updates
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.core import mail
 from django.conf import settings
 import json
-# import time
 
 
 @API.endpoint(CommodityRequest)
@@ -38,7 +38,13 @@ def get_5_firms(request):
 
 @API.endpoint(OneFirm)
 def find_by_name_and_symbol(request):
-    return {'firm': Firm.objects.get_or_none(name=request.firm_name, short_name=request.symbol)}
+    print(request.firm_name)
+    return {'firm': list(Firm.objects.filter(name__icontains=request.firm_name))}
+
+
+def update(request):
+    run_updates()
+    return HttpResponse(200)
 
 
 @csrf_exempt

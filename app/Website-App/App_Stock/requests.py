@@ -35,7 +35,6 @@ class OneFirm:
         try:
             # validate query param!
             request.firm_name = request.GET['name']
-            request.symbol = request.GET['symbol']
 
             return request
         except:
