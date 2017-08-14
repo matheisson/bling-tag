@@ -16,6 +16,9 @@ class Commodity(models.Model):
 
     objects = CommodityManager()
 
+    def __str__(self):
+        return self.name
+
 
 class FirmManager(models.Manager):
 
@@ -36,5 +39,8 @@ class Firm(models.Model):
     stock_price = models.FloatField(default=0)
     short_name = models.CharField(max_length=255)
     is_basic = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 
     objects = FirmManager()
