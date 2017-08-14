@@ -27,7 +27,7 @@
       You could get {{ result.numberOfCommodities }} of {{ result.commodity.name }}s for
       your {{ numberOfShares }} {{ result.firm.name }} shares.
     </p>
-    <img src="result.commodity.picture_url" height="50" width="50">
+    <img src="{{result.commodity.picture_url}}" height="250" width="250">
     <input placeholder="Send it to..."/><button>Send</button>
     <button class="btn btn-success" (click)="restartProcess()">Restart</button>
   </div>

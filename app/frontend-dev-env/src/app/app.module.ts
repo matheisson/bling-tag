@@ -22,7 +22,6 @@ import { HttpClient } from './_httpclient/httpclient';
 import { AppComponent } from './app.component';
 import {
   NavBarComponent,
-  InitComponent,
   LoginComponent,
   HomeComponent
 } from './components/_index'
@@ -51,7 +50,6 @@ import {
     declarations: [
         AppComponent,
         NavBarComponent,
-        InitComponent,
         LoginComponent,
         HomeComponent
     ],

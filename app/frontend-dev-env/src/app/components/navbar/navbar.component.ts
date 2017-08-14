@@ -24,7 +24,9 @@ export class NavBarComponent {
     }
 
     logout() {
-        this.globalEventsManager.showNavBar(false);
+        localStorage.removeItem("auth-token");
+        localStorage.removeItem("user");
+        this.router.navigate(['login']);
     }
 
 }
