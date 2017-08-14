@@ -28,7 +28,8 @@ import {
 import {
     UserService,
     FirmService,
-    CommodityService
+    CommodityService,
+    MailService
 } from './_services/_index';
 
 @NgModule({
@@ -59,7 +60,8 @@ import {
         HttpClient,
         UserService,
         FirmService,
-        CommodityService
+        CommodityService,
+        MailService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

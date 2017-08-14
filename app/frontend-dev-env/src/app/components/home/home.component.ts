@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { Router } from '@angular/router';
 import { GlobalEventsManager } from '../../_eventsmanager/global.eventsmanager';
-import { User, Firm, Commodity, Result } from "../../_models/_index";
-import { UserService, FirmService, CommodityService } from '../../_services/_index';
+import { User, Firm, Commodity, Result, MailMessage } from "../../_models/_index";
+import { UserService, FirmService, CommodityService, MailService } from '../../_services/_index';
 import * as _ from 'lodash';
 
 @Component({
@@ -20,13 +20,17 @@ export class HomeComponent{
     public numberOfShares = 10;
     public result: Result;
     public commoditySelectorActive: boolean = false;
+    public isCalculating: boolean = false;
+    public searchString: string;
+    public mailMessage: MailMessage;
 
     constructor(
           private eventsManager: GlobalEventsManager,
           private router: Router,
           private userService: UserService,
           private firmService: FirmService,
-          private commodityService: CommodityService
+          private commodityService: CommodityService,
+          private mailService: MailService
     ){
           this.eventsManager.showNavBar(true);
           if (localStorage["auth-token"]) {
@@ -54,6 +58,10 @@ export class HomeComponent{
         return JSON.parse(localStorage.user).user ? true : false;
     }
 
+    isUpgraded(){
+        return JSON.parse(localStorage.user).is_paid ? true : false;
+    }
+
     getRandomResult(){
         this.chosenCommodity = _.sample(this.commodities);
         this.createResult();
@@ -70,8 +78,15 @@ export class HomeComponent{
     }
 
     createResult(){
-        let numberOfCommodities = this.selectedFirm.stock_price * this.numberOfShares / this.chosenCommodity.price;
-        this.result = new Result(this.user, this.selectedFirm, this.chosenCommodity, numberOfCommodities);
+        this.isCalculating = true;
+        setTimeout(() => {
+          let user = JSON.parse(localStorage.user);
+          this.isCalculating = false;
+          let numberOfCommodities = this.selectedFirm.stock_price * this.numberOfShares / this.chosenCommodity.price;
+          this.result = new Result(user, this.selectedFirm, this.chosenCommodity, numberOfCommodities);
+          let value = numberOfCommodities * this.selectedFirm.stock_price
+          this.mailMessage = new MailMessage(user.user, numberOfCommodities, this.selectedFirm.short_name, value, this.chosenCommodity.name);
+        }, 2000);
     }
 
     restartProcess(){
@@ -79,5 +94,40 @@ export class HomeComponent{
         this.result = null;
         this.chosenCommodity = null;
         this.selectedFirm = null;
+    }
+
+    noFirm(){
+        return this.selectedFirm == null;
+    }
+
+    noResult(){
+        return this.result == null;
+    }
+
+    shouldShowCommodities(){
+        return this.commoditySelectorActive && !this.isCalculating;
+    }
+
+    convertName(name){
+        return name.length < 21 ? name : name.substring(0, 21) + "...";
+    }
+
+    filterFirms(){
+        this.firmService.filterFirms(this.searchString).subscribe(
+            (data: any) => this.firms = data["firm"]
+        )
+    }
+
+    resetFirms(){
+        this.searchString = null;
+        this.firmService.getFirms().subscribe(
+            (data: any) => this.firms = data["baseFirms"]
+        )
+    }
+
+    sendMail(){
+        this.mailService.sendMail(this.mailMessage).subscribe(
+            (response: any) => console.log(response)
+        )
     }
 }

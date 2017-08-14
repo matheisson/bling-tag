@@ -1,34 +1,81 @@
 <div class="container">
-  <h4>Firms:</h4>
-  <div class="firm-buttons">
-    <div *ngFor="let firm of firms" class="one-firm">
-      <button class="btn btn-success {{ isSelected(firm) }}" (click)="selectFirm(firm)">
-        {{ firm.name }}
-      </button>
-      <span>{{ firm.short_name }}</span>
-      <span>{{ firm.stock_price }}</span>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 block-container firms-container" *ngIf="noResult()">
+      <div class="search-container" *ngIf="isUpgraded()">
+        <div class="row input-container">
+          <input placeholder="Search for a firm" class="form-control" [(ngModel)]="searchString"/>
+        </div>
+        <div class="row button-container">
+          <button class="btn btn-primary" (click)="filterFirms()">Search</button>
+        </div>
+        <div class="row button-container">
+          <button class="btn btn-info" (click)="resetFirms()">Reset</button>
+        </div>
+      </div>
+      <h4 class="title">Firms:</h4>
+      <p class="upgrade-info" *ngIf="!isUpgraded()">(Upgrade your profile for more firms)</p>
+      <div class="firm-buttons">
+        <div *ngFor="let firm of firms" class="one-firm">
+          <button class="btn btn-primary firm-button {{ isSelected(firm) }}" (click)="selectFirm(firm)">
+            {{ convertName(firm.name) }}
+          </button>
+          <span class="stock-price">{{ firm.stock_price.toFixed(1) }}&nbsp;&#36;</span>
+        </div>
+      </div>
+      <div *ngIf="selectedFirm">
+        <div class="number-of-shares">
+          <span>Number of shares</span>
+          <input [(ngModel)]="numberOfShares" [disabled]="!isRegistered()"/>
+        </div>
+        <div class="row button-container">
+          <button (click)="getRandomResult()" class="btn btn-info">Convert to random</button>
+        </div>
+        <div class="row button-container">
+          <button *ngIf="isRegistered()" (click)="getCommoditySelector()" class="btn btn-primary">Choose commodity</button>
+          <p class="upgrade-info" *ngIf="!isRegistered()">(Login to see all firms)</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 block-container commdities-container" *ngIf="noResult()">
+      <div *ngIf="noFirm()" class="no-firm-warn title">
+        <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+        <br>
+        No firm selected!
+      </div>
+      <div *ngIf="isCalculating" class="finding title">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        <br>
+        Finding some nice deal for you...
+      </div>
+      <h4 *ngIf="shouldShowCommodities()" class="title">Commodities:</h4>
+      <div class="commodity-buttons" *ngIf="shouldShowCommodities()">
+        <div *ngFor="let commodity of commodities" class="one-commodity">
+          <button class="btn btn-primary" (click)="getResult(commodity)">
+            {{ commodity.name }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf="selectedFirm">
-    <input [(ngModel)]="numberOfShares" [disabled]="!isRegistered()"/>
-    <button (click)="getRandomResult()">Convert to random</button>
-    <button *ngIf="isRegistered()" (click)="getCommoditySelector()">Choose commodity</button>
-  </div>
-  <div class="commodity-buttons" *ngIf="commoditySelectorActive">
-    <div *ngFor="let commodity of commodities" class="one-commodity">
-      <button class="btn btn-success" (click)="getResult(commodity)">
-        {{ commodity.name }}
-      </button>
-    </div>
-  </div>
-  <div *ngIf="result">
-    <h4>What a deal would THAT be!</h4>
-    <p>
-      You could get {{ result.numberOfCommodities }} of {{ result.commodity.name }}s for
+  <div *ngIf="result" class="result-container">
+    <h4 class="title">What a deal would THAT be!</h4>
+    <p class="long-text">
+      You could get {{ result.numberOfCommodities.toFixed(1) }} of {{ result.commodity.name }}s for
       your {{ numberOfShares }} {{ result.firm.name }} shares.
     </p>
-    <img src="{{result.commodity.picture_url}}" height="250" width="250">
-    <input placeholder="Send it to..."/><button>Send</button>
-    <button class="btn btn-success" (click)="restartProcess()">Restart</button>
+    <img src="{{result.commodity.picture_url}}" height="250" width="250" class="img-rounded">
+    <div class="row input-container">
+      <input placeholder="Share it with... (email)" [(ngModel)]="mailMessage.email" class="form-control"/>
+    </div>
+    <p class="in-the-name">In the name of...</p>
+    <div class="row input-container">
+      <input [(ngModel)]="mailMessage.username" class="form-control"/>
+    </div>
+    <div class="row button-container">
+      <button class="btn btn-info" (click)="sendMail()">Send</button>
+    </div>
+    <div class="row button-container">
+      <button class="btn btn-primary" (click)="restartProcess()">Restart</button>
+    </div>
   </div>
 </div>

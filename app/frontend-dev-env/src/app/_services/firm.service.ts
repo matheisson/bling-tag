@@ -14,4 +14,8 @@ export class FirmService {
         return this.client.get('/api/stock/basefirms');
     }
 
+    public filterFirms(firm): Observable<Firm[]> {
+        return this.client.get('/api/stock/firm?name=' + firm);
+    }
+
 }
