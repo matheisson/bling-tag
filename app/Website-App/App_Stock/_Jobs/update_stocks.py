@@ -40,6 +40,7 @@ def run_updates():
                 print(""+year+"-"+month+"-11 " + hour + ":00:00")
                 new_stock_price = stock["Time Series (60min)"]["" + year + "-" + month + "-11 10:00:00"]["1. open"]
             except KeyError:
+                print(firm.name + " has its original price, something went wrong with the api data")
                 new_stock_price = firm.stock_price
 
 
@@ -47,7 +48,7 @@ def run_updates():
             firm = Firm.objects.get(short_name=symbol)
         except Firm.MultipleObjectsReturned:
             firm = Firm.objects.get(short_name=symbol).first()
-            print(firm.name)
+            print(firm.name + "found more than 1 time")
 
         firm.stock_price = new_stock_price
         firm.save()
