@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -15,6 +16,9 @@ class Commodity(models.Model):
     picture_url = models.CharField(max_length=1000)
 
     objects = CommodityManager()
+
+    def __str__(self):
+        return self.name
 
 
 class FirmManager(models.Manager):
@@ -36,5 +40,8 @@ class Firm(models.Model):
     stock_price = models.FloatField(default=0)
     short_name = models.CharField(max_length=255)
     is_basic = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 
     objects = FirmManager()

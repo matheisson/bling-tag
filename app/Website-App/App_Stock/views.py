@@ -7,8 +7,10 @@ from App_Stock._Jobs.update_stocks import run_updates
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core.mail import send_mail
-from django.core import mail
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 import json
 
 
@@ -53,15 +55,20 @@ def send_email(request):
     if request.method == 'POST':
         try:
             body = json.loads(request.body.decode("utf-8"))
-            message = body['username'] + " Sent this message to You from Bling tag: My " + str(body['piece']) + " pieces of " + body['short_name'] + " share(s) " \
-                "worth " + str(body['value']) + " " + body['commodity'] + " I invite You to try it as well!"
+            html_content = render_to_string('template.html',
+                                            {
+                                                'name': body['username'],
+                                                'short': body['short_name'],
+                                                'piece': str(body['piece']),
+                                                'value': str(body['value']),
+                                                'commodity': body['commodity'],
+                                            })
 
-            send_mail(
-                "check it out",
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [body['email']],
-            )
+
+            text_content = strip_tags(html_content)
+            msg = EmailMultiAlternatives("Check what I found!", text_content, settings.DEFAULT_FROM_EMAIL, [body['email']])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
 
             return HttpResponse(200)
         except KeyError:
