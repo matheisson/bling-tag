@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 block-container firms-container" *ngIf="noResult()">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 block-container firms-container {{firmsShouldDisappear()}}" *ngIf="noResult()">
       <div class="search-container" *ngIf="isUpgraded()">
         <div class="row input-container">
           <input placeholder="Search for a firm" class="form-control" [(ngModel)]="searchString"/>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 block-container commdities-container" *ngIf="noResult()">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 block-container commdities-container {{commodityShouldDisappear()}}" *ngIf="noResult()">
       <div *ngIf="noFirm()" class="no-firm-warn title">
         <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
         <br>

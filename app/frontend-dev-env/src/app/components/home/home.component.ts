@@ -130,4 +130,12 @@ export class HomeComponent{
             (response: any) => console.log(response)
         )
     }
+
+    firmsShouldDisappear(){
+        return (this.commoditySelectorActive || this.isCalculating) ? "no-mobile" : "present";
+    }
+
+    commodityShouldDisappear(){
+        return (this.commoditySelectorActive || this.isCalculating) ? "present" : "no-mobile";
+    }
 }
