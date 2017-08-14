@@ -64,12 +64,6 @@ def send_email(request):
                                                 'commodity': body['commodity'],
                                             })
 
-            # send_mail(
-            #     "check it out",
-            #     message,
-            #     settings.DEFAULT_FROM_EMAIL,
-            #     [body['email']],
-            # )
 
             text_content = strip_tags(html_content)
             msg = EmailMultiAlternatives("Check what I found!", text_content, settings.DEFAULT_FROM_EMAIL, [body['email']])
