@@ -11,8 +11,9 @@
         <div class="row button-container">
           <button class="btn btn-info" (click)="resetFirms()">Reset</button>
         </div>
+        <hr>
       </div>
-      <h4 class="title">Firms:</h4>
+      <h4 class="title no-mobile">Firms:</h4>
       <p class="upgrade-info" *ngIf="!isUpgraded()">(Upgrade your profile for more firms)</p>
       <div class="firm-buttons">
         <div *ngFor="let firm of firms" class="one-firm">

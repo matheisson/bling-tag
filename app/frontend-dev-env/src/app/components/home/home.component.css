@@ -46,7 +46,6 @@
   width: 20%;
   text-align: right;
   color: green;
-  font-weight: bold;
 }
 
 .one-commodity {
@@ -133,5 +132,8 @@
   }
   .number-of-shares {
     margin: 30px;
+  }
+  .no-mobile {
+    display: none;
   }
 }
