@@ -2,6 +2,7 @@ import requests
 import datetime
 from App_Stock.models import Firm
 import time
+from json import JSONDecodeError
 
 
 def date_formatter(n):
@@ -17,7 +18,11 @@ def run_updates():
         symbol = f.short_name
         time.sleep(0.31)
         r = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='+symbol+'&interval=60min&apikey=F5BCEBV06CHGKOZO')
-        stock = r.json()
+
+        try:
+            stock = r.json()
+        except JSONDecodeError:
+            pass
 
         now = datetime.datetime.now()
 
@@ -29,19 +34,16 @@ def run_updates():
         if int(hour) > 16 or int(hour) < 10:
             hour = str(16)
 
-        print("stock")
         # new_stock_price = stock["Time Series (60min)"][""+year+"-"+month+"-"+day+" " + hour + ":00:00"]["1. open"]
         try:
             new_stock_price = stock["Time Series (60min)"][""+year+"-"+month+"-11 " + hour + ":00:00"]["1. open"]
-            print(""+year+"-"+month+"-11 " + hour + ":00:00  ------ correct")
+            print(""+year+"-"+month+"-11 " + hour + ":00:00  ------ correct " + f.name)
         except KeyError:
             try:
-                print(f.name)
-                print(""+year+"-"+month+"-11 " + hour + ":00:00")
                 new_stock_price = stock["Time Series (60min)"]["" + year + "-" + month + "-11 10:00:00"]["1. open"]
             except KeyError:
-                print(firm.name + " has its original price, something went wrong with the api data")
-                new_stock_price = firm.stock_price
+                print(f.name + " has its original price, something went wrong with the api data")
+                new_stock_price = f.stock_price
 
 
         try:
