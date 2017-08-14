@@ -23,10 +23,38 @@ export class NavBarComponent {
       });
     }
 
-    logout() {
+    upgrade(){
+        alert("Payment should come here");
+    }
+
+    login(){
+        this.router.navigate(['login']);
+    }
+
+    logout(){
         localStorage.removeItem("auth-token");
         localStorage.removeItem("user");
         this.router.navigate(['login']);
+    }
+
+    shouldShowLogout(){
+        if (localStorage.user) {
+          return JSON.parse(localStorage.user)["user"] ? true : false;
+        } else {
+          return false;
+        }
+    }
+
+    shouldShowUpgrade(){
+        if (localStorage.user) {
+            return (JSON.parse(localStorage.user)["is_paid"] === false);
+        } else {
+            return false;
+        }
+    }
+
+    shouldShowLogin(){
+        return !this.shouldShowLogout() && this.router.url !== '/login';
     }
 
 }

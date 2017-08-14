@@ -4,7 +4,15 @@
       <a class="navbar-brand" href="/">Bling-tag</a>
      </div>
      <div class="navbar-header navbar-right">
-       <button type="button" class="btn btn-default navbar-btn" (click)="logout()">Logout</button>
+       <button *ngIf="shouldShowLogout()" type="button" class="btn btn-default navbar-btn" (click)="logout()">
+         Logout
+       </button>
+       <button *ngIf="shouldShowLogin()" type="button" class="btn btn-default navbar-btn" (click)="login()">
+         Login
+       </button>
+       <button *ngIf="shouldShowUpgrade()" type="button" class="btn btn-default navbar-btn" (click)="upgrade()">
+         Upgrade
+       </button>
      </div>
   </div>
 </nav>
