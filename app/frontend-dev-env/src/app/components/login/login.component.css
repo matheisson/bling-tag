@@ -3,6 +3,22 @@
   padding-top: 65px;
 }
 
+.info-message-success {
+  background-color: #5cb85c;
+  color: white;
+  width: 80%;
+  margin-left: 10%;
+  text-align: center;
+}
+
+.info-message-error {
+  background-color: #d9534f;
+  color: white;
+  width: 80%;
+  margin-left: 10%;
+  text-align: center;
+}
+
 .card {
   box-shadow: 0 0 10px #999;
 }
