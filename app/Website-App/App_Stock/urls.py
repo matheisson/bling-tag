@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^share$', views.send_email, name='send_mail'),
     url(r'^update$', views.update, name="update"),
     url(r'^relatedunit', views.get_related_units, name='units'),
+    url(r'^add_units', views.units, name='add_units'),
 
 ]
