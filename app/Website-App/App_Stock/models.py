@@ -45,3 +45,18 @@ class Firm(models.Model):
         return self.name
 
     objects = FirmManager()
+
+
+class Units(models.Model):
+
+    name = models.CharField(max_length=255)
+    list_of_units = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+class CommodityUnitRelation(models.Model):
+
+    commodity = models.ForeignKey(Commodity, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Units, on_delete=models.CASCADE)

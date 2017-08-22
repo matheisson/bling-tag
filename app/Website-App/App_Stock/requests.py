@@ -37,3 +37,15 @@ class OneFirm:
             return request
         except:
             return None
+
+
+class RelatedUnitRequest:
+    auth_status = "public"
+    request_method = "GET"
+
+    def get_from_request(self, request):
+        try:
+            request.commodity = request.GET['commodity']
+            return request
+        except:
+            return None

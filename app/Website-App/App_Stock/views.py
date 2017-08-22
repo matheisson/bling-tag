@@ -1,6 +1,6 @@
 from _Middleware import API
 from App_Stock.requests import *
-from App_Stock.models import Commodity, Firm
+from App_Stock.models import Commodity, Firm, CommodityUnitRelation, Units
 from django.http import JsonResponse
 from App_Stock._Jobs.load_data import create_firms
 from App_Stock._Jobs.update_stocks import run_updates
@@ -21,6 +21,11 @@ def get_commodities(request):
 @API.endpoint(CommodityRequest)
 def get_all_commodities(request):
     return {'all_commodities': [commodity for commodity in Commodity.objects.get_all(request)]}
+
+
+@API.endpoint(RelatedUnitRequest)
+def get_related_units(request):
+    return {'units': [rel_obj.unit for rel_obj in CommodityUnitRelation.objects.filter(commodity=request.commodity)]}
 
 
 @API.endpoint(FirmRequest)

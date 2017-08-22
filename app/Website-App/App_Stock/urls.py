@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^firm$', views.find_by_name_and_symbol, name='single_firm'),
     url(r'^allcommodities$', views.get_all_commodities, name='all_commodities'),
     url(r'^share$', views.send_email, name='send_mail'),
-    url(r'^update$', views.update, name="update")
+    url(r'^update$', views.update, name="update"),
+    url(r'^relatedunit', views.get_related_units, name='units'),
+
 ]
