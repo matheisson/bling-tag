@@ -4,6 +4,7 @@ from App_Stock.models import Commodity, Firm, CommodityUnitRelation, Units
 from django.http import JsonResponse
 from App_Stock._Jobs.load_data import create_firms
 from App_Stock._Jobs.update_stocks import run_updates
+from App_Stock._Jobs.units_script import create_commodities
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core.mail import send_mail
@@ -35,6 +36,11 @@ def get_firms(request):
 
 def firms(self):
     create_firms()
+    return JsonResponse({'success': True})
+
+
+def units(self):
+    create_commodities()
     return JsonResponse({'success': True})
 
 
