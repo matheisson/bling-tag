@@ -103,7 +103,7 @@ export class HomeComponent{
 
         let numberOfUnits = [];
         if (this.chosenUnit){
-          let number = ((this.numberOfShares * this.selectedFirm.stock_price) / this.chosenCommodity.price) / this.chosenUnit.multiplier
+          let number = ((this.numberOfShares * this.selectedFirm.stock_price) / this.chosenCommodity.price) / this.chosenUnit.multiplier;
           let numberOfUnit = new NumberOfUnit(this.chosenUnit.name, number);
           numberOfUnits.push(numberOfUnit);
         } else {
