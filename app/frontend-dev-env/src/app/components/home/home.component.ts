@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { Router } from '@angular/router';
 import { GlobalEventsManager } from '../../_eventsmanager/global.eventsmanager';
-import { User, Firm, Commodity, Result, MailMessage } from "../../_models/_index";
-import { UserService, FirmService, CommodityService, MailService } from '../../_services/_index';
+import { User, Firm, Commodity, Result, MailMessage, InfoMessage, Unit, Units, NumberOfUnit } from "../../_models/_index";
+import { UserService, FirmService, CommodityService, MailService, UnitService } from '../../_services/_index';
 import * as _ from 'lodash';
 
 @Component({
@@ -23,6 +23,10 @@ export class HomeComponent{
     public isCalculating: boolean = false;
     public searchString: string;
     public mailMessage: MailMessage;
+    public infoMessage: InfoMessage;
+    public relatedUnits: Units[];
+    public chosenUnits: Units;
+    public chosenUnit: Unit;
 
     constructor(
           private eventsManager: GlobalEventsManager,
@@ -30,7 +34,8 @@ export class HomeComponent{
           private userService: UserService,
           private firmService: FirmService,
           private commodityService: CommodityService,
-          private mailService: MailService
+          private mailService: MailService,
+          private unitService: UnitService
     ){
           this.eventsManager.showNavBar(true);
           if (localStorage["auth-token"]) {
@@ -44,10 +49,27 @@ export class HomeComponent{
           this.commodityService.getCommodities().subscribe(
               (data: any) => this.commodities = data["all_commodities"]
           )
+          this.monitorMessages()
+    }
+
+    monitorMessages(){
+        let currentText;
+        let counter = 0;
+        setInterval(() => {
+            if (this.infoMessage != null) {
+                if (currentText == this.infoMessage.text) { counter += 1; }
+                if (currentText !== this.infoMessage.text) { currentText = this.infoMessage.text; }
+                if (counter == 0) { this.infoMessage = null; }
+            }
+        }, 500)
     }
 
     selectFirm(firm){
         this.selectedFirm = firm;
+    }
+
+    disabledSearch(){
+      return !(this.searchString && this.searchString.length > 2);
     }
 
     isSelected(firm){
@@ -64,7 +86,7 @@ export class HomeComponent{
 
     getRandomResult(){
         this.chosenCommodity = _.sample(this.commodities);
-        this.createResult();
+        this.getUnits();
     }
 
     getCommoditySelector(){
@@ -74,19 +96,61 @@ export class HomeComponent{
     getResult(commodity){
         this.commoditySelectorActive = false;
         this.chosenCommodity = commodity;
-        this.createResult();
+        this.getUnits();
     }
 
     createResult(){
+
+        let numberOfUnits = [];
+        if (this.chosenUnit){
+          let number = ((this.numberOfShares * this.selectedFirm.stock_price) / this.chosenCommodity.price) / this.chosenUnit.multiplier;
+          let numberOfUnit = new NumberOfUnit(this.chosenUnit.name, number);
+          numberOfUnits.push(numberOfUnit);
+        } else {
+          let initialValue = this.numberOfShares * this.selectedFirm.stock_price
+          for (let unit of this.chosenUnits.list_of_units){
+              let integers = Math.trunc(initialValue / (this.chosenCommodity.price * unit.multiplier));
+              let remainder = initialValue % (this.chosenCommodity.price * unit.multiplier);
+              let numberOfUnit = new NumberOfUnit(unit.name, integers);
+              initialValue = initialValue - (integers * this.chosenCommodity.price * unit.multiplier);
+              numberOfUnits.push(numberOfUnit);
+          }
+        }
+
+        let user = JSON.parse(localStorage.user);
+        this.result = new Result(user, this.selectedFirm, this.chosenCommodity, numberOfUnits);
+        let value = this.numberOfShares * this.selectedFirm.stock_price
+        let username = user.user ? user.user : "";
+        this.mailMessage = new MailMessage(username, numberOfUnits, this.selectedFirm.short_name, value, this.chosenCommodity.name);
+    }
+
+    getUnits(){
         this.isCalculating = true;
-        setTimeout(() => {
-          let user = JSON.parse(localStorage.user);
-          this.isCalculating = false;
-          let numberOfCommodities = this.selectedFirm.stock_price * this.numberOfShares / this.chosenCommodity.price;
-          this.result = new Result(user, this.selectedFirm, this.chosenCommodity, numberOfCommodities);
-          let value = numberOfCommodities * this.selectedFirm.stock_price
-          this.mailMessage = new MailMessage(user.user, numberOfCommodities, this.selectedFirm.short_name, value, this.chosenCommodity.name);
-        }, 2000);
+        this.unitService.getRelatedUnits(this.chosenCommodity).subscribe(
+            (data: any) => {
+                let parsedData = data["units"].map((units) => {
+                    units.list_of_units = JSON.parse(units.list_of_units).sort((e1, e2) => e2.multiplier - e1.multiplier);
+                    return units;
+                })
+                let baseUnit = new Unit("piece", 1);
+                let baseUnits = [new Units("NumberOf", [baseUnit])];
+                this.relatedUnits = parsedData.length > 0 ? parsedData : baseUnits;
+                this.chosenUnits = this.relatedUnits[0];
+                this.chosenUnit = null;
+                this.isCalculating = false;
+                this.createResult();
+            }
+        )
+    }
+
+    selectUnits(units: Units){
+        this.chosenUnits = units;
+        this.createResult()
+    }
+
+    selectUnit(unit: Unit){
+        this.chosenUnit = unit;
+        this.createResult()
     }
 
     restartProcess(){
@@ -127,8 +191,21 @@ export class HomeComponent{
 
     sendMail(){
         this.mailService.sendMail(this.mailMessage).subscribe(
-            (response: any) => console.log(response)
+            (response: any) => {
+                this.infoMessage = new InfoMessage("Success", "Email sent", "success");
+                this.restartProcess()
+            }
         )
+    }
+
+    disabledSend(){
+        if (!this.mailMessage.email){
+          return false;
+        }
+        if (!this.mailMessage.username){
+          return false;
+        }
+        return !(this.mailMessage.username.length > 0) || !this.mailMessage.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     }
 
     firmsShouldDisappear(){

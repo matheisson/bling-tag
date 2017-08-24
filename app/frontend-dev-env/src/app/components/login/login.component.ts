@@ -12,7 +12,7 @@ import { UserService } from '../../_services/_index';
 export class LoginComponent{
 
     public user: User = new User();
-    public messages: InfoMessage[] = [];
+    public infoMessage: InfoMessage;
 
     constructor(
           private eventsManager: GlobalEventsManager,
@@ -21,6 +21,19 @@ export class LoginComponent{
     ){
           this.eventsManager.showNavBar(true);
           sessionStorage.setItem('loginSeen', 'true');
+          this.monitorMessages();
+    }
+
+    monitorMessages(){
+        let currentText;
+        let counter = 0;
+        setInterval(() => {
+            if (this.infoMessage != null) {
+              if (currentText == this.infoMessage.text) { counter += 1; }
+              if (currentText !== this.infoMessage.text) { currentText = this.infoMessage.text; }
+              if (counter == 3) { this.infoMessage = null; counter = 0; }
+            }
+        }, 1000)
     }
 
     requestLogin(){
@@ -29,6 +42,8 @@ export class LoginComponent{
                 if (response["authToken"]){
                     localStorage.setItem("auth-token", response["authToken"]);
                     this.getHome();
+                } else {
+                    this.infoMessage = new InfoMessage("Error", "Invalid credentials", "error");
                 }
             }
         )
@@ -38,11 +53,21 @@ export class LoginComponent{
         this.userService.signupUser(this.user).subscribe(
             (response: DefaultResponse) => {
                 if (!response.is_successful) {
-                    this.messages.push(new InfoMessage("Error", "Occupied username", "error"));
+                    this.infoMessage = new InfoMessage("Error", "Occupied username", "error");
+                } else {
+                    this.infoMessage = new InfoMessage("Success", "Welcome to our site", "success");
+                    this.user = new User();
                 }
-                console.log(response);
             }
         )
+    }
+
+    disabledSignup(){
+      return !this.user.username || !this.user.password || !(this.user.username.length > 5)|| !(this.user.password.length > 9) || this.user.password != this.user.passwordAgain;
+    }
+
+    disabledLogin(){
+       return !this.user.username || !this.user.password || !(this.user.username.length > 5)|| !(this.user.password.length > 9);
     }
 
     getHome(){

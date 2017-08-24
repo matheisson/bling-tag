@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="row" *ngIf="infoMessage">
+    <p class="info-message-{{infoMessage.severity}}">{{ infoMessage.text }}</p>
+  </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 block-container firms-container {{firmsShouldDisappear()}}" *ngIf="noResult()">
       <div class="search-container" *ngIf="isUpgraded()">
@@ -6,7 +9,7 @@
           <input placeholder="Search for a firm" class="form-control" [(ngModel)]="searchString"/>
         </div>
         <div class="row button-container">
-          <button class="btn btn-primary" (click)="filterFirms()">Search</button>
+          <button class="btn btn-primary" (click)="filterFirms()" [disabled]="disabledSearch()">Search</button>
         </div>
         <div class="row button-container">
           <button class="btn btn-info" (click)="resetFirms()">Reset</button>
@@ -33,7 +36,7 @@
         </div>
         <div class="row button-container">
           <button *ngIf="isRegistered()" (click)="getCommoditySelector()" class="btn btn-primary">Choose commodity</button>
-          <p class="upgrade-info" *ngIf="!isRegistered()">(Login to see all firms)</p>
+          <p class="upgrade-info" *ngIf="!isRegistered()">(Login to see all comodities)</p>
         </div>
       </div>
     </div>
@@ -61,10 +64,28 @@
   <div *ngIf="result" class="result-container">
     <h4 class="title">What a deal would THAT be!</h4>
     <p class="long-text">
-      You could get {{ result.numberOfCommodities.toFixed(1) }} of {{ result.commodity.name }}s for
-      your {{ numberOfShares }} {{ result.firm.name }} shares.
+      {{ result.commodity.name }}<br>
+      From {{ result.numberOfShares }} {{ result.firm.name }} shares
+    </p>
+    <p *ngFor="let unit of result.numberOfUnits">
+      {{unit.number}} {{unit.name}}
     </p>
     <img src="{{result.commodity.picture_url}}" height="250" width="250" class="img-rounded">
+
+      <div class="measurement">
+        <p>Choose measurement system</p>
+        <button *ngFor="let units of relatedUnits" (click)="selectUnits(units)">
+          {{units.name}}
+        </button>
+      </div>
+
+      <div class="unit" *ngIf="chosenUnits">
+        <p>Choose unit</p>
+        <button *ngFor="let unit of chosenUnits.list_of_units" (click)="selectUnit(unit)">
+          {{unit.name}}
+        </button>
+      </div>
+
     <div class="row input-container">
       <input placeholder="Share it with... (email)" [(ngModel)]="mailMessage.email" class="form-control"/>
     </div>
@@ -73,7 +94,7 @@
       <input [(ngModel)]="mailMessage.username" class="form-control"/>
     </div>
     <div class="row button-container">
-      <button class="btn btn-info" (click)="sendMail()">Send</button>
+      <button class="btn btn-info" (click)="sendMail()" [disabled]="disabledSend()">Send</button>
     </div>
     <div class="row button-container">
       <button class="btn btn-primary" (click)="restartProcess()">Restart</button>

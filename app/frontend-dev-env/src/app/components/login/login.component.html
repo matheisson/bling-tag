@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="row" *ngIf="infoMessage">
+    <p class="info-message-{{infoMessage.severity}}">{{ infoMessage.text }}</p>
+  </div>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-6 col-lg-6 block-container">
       <h4 class="title no-mobile">About us</h4>
@@ -35,7 +38,7 @@
         </p>
       </div>
       <div class="row button-container">
-        <button class="btn btn-primary" (click)="requestLogin()">
+        <button class="btn btn-primary" (click)="requestLogin()" [disabled]="disabledLogin()">
           Login
           <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
         </button>
@@ -48,7 +51,7 @@
         </p>
       </div>
       <div class="row button-container">
-        <button class="btn btn-info" (click)="requestSignup()">
+        <button class="btn btn-info" (click)="requestSignup()" [disabled]="disabledSignup()">
           <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
           Signup
         </button>
