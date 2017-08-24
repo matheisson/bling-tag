@@ -26,12 +26,12 @@ def create_commodities():
     london.save()
 
     # units
-    troy = Units(name="Troy Weights", list_of_units='[{"name": "Troy Pound", "multiplier": 5760},{"name": "Troy Ounce",'
-                                                    ' "multiplier":480},{"name": "Troy Grain", "multiplier": 1}]')
+    troy = Units(name="Troy Weights", list_of_units='[{"name": "Troy Pound", "multiplier": 373.2417616},{"name": "Troy Ounce",'
+                                                    ' "multiplier": 31.10348013},{"name": "Troy Grain", "multiplier": 0.06479891}]')
     troy.save()
 
     metric = Units(name="Metric System", list_of_units='[{"name": "Kilogram", "multiplier": 1000},{"name": "Dekagram",'
-                                                       ' "multiplier":100},{"name": "Gram", "multiplier": 1}]')
+                                                       ' "multiplier":10},{"name": "Gram", "multiplier": 1}]')
     metric.save()
 
     bottles = Units(name='Champagne Bottles', list_of_units='[{"name": "1/4", "multiplier": 0.25}, {"name": "1/2",'
@@ -41,12 +41,11 @@ def create_commodities():
                                                                '{"name": "Methusela", "multiplier": 8}, {"name": "Salmanazar", "multiplier": 12}, {"name": "Balthazar", "multiplier": 16}, {"name": "Nebuchadnezzar", "multiplier": 20},{"name": "Solomon", "multiplier": 24}, {"name": "Sovereign", "multiplier": 35}, {"name": "Primat", "multiplier": 36}, {"name": "Melchizedek", "multiplier": 40}]')
     bottles.save()
 
-    jap_area = Units(name='Japanese Area', list_of_units='[{"name": "Square Meter", "multiplier": 1}, {"name": "Tsubo",'
-                                                        ' "multiplier":3.305785123}, {"name": "Tatami", "multiplier": 1.6529}]')
+    jap_area = Units(name='Japanese Area', list_of_units='[{"name": "Tsubo","multiplier":0.3025}, {"name": "Tatami", "multiplier": 0.6049972775122512}]')
     jap_area.save()
 
-    english_area = Units(name='English Area Units', list_of_units='[{"name": "Square Feet", "multiplier":0.092903},'
-                                                                 '{"name": "Square Yard", "multiplier":0.83612736},{"name": "Acres", "multiplier":4046.85642}]')
+    english_area = Units(name='English Area Units', list_of_units='[{"name": "Square Feet", "multiplier": 10.763867316305},'
+                                                                 '{"name": "Square Yard", "multiplier":1.1959900463011},{"name": "Acres", "multiplier": 0.00024710538146717}]')
     english_area.save()
 
     date = Units(name="D/M/Y", list_of_units='[{"name": "Day", "multiplier": 1}, {"name": "Month", "multiplier": 30},'
@@ -54,11 +53,11 @@ def create_commodities():
     date.save()
 
     # only Silver!!
-    tael = Units(name="Tael", list_of_units='{"name": "Treasury Standard", "multiplier": 37.5}')
+    tael = Units(name="Tael", list_of_units='{"name": "Treasury Standard", "multiplier": 0.026659557451346308}')
     tael.save()
 
     # multiply gram!!!
-    tola = Units(name="Tola", list_of_units='{"name": "Indian Tola", "multiplier": 11.33980925}')
+    tola = Units(name="Tola", list_of_units='{"name": "Indian Tola", "multiplier": 0.085735260233307}')
     tola.save()
 
     gold_troy = CommodityUnitRelation(commodity=gold, unit=troy)
