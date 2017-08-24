@@ -1,17 +1,17 @@
-import { User, Firm, Commodity } from "./_index";
+import { User, Firm, Commodity, NumberOfUnit } from "./_index";
 
 export class Result {
 
   firm: Firm;
   commodity: Commodity;
   user: User;
-  numberOfCommodities: number;
+  numberOfUnits: NumberOfUnit[];
 
-  constructor(user: User, firm: Firm, commodity: Commodity, numberOfCommodities: number){
+  constructor(user: User, firm: Firm, commodity: Commodity, numberOfUnits: NumberOfUnit[]){
       this.user = user;
       this.firm = firm;
       this.commodity = commodity;
-      this.numberOfCommodities = numberOfCommodities;
+      this.numberOfUnits = numberOfUnits;
   }
 
 }

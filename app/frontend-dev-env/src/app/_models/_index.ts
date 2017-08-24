@@ -5,3 +5,6 @@ export * from './result.model';
 export * from './default-response.model';
 export * from './info-message.model';
 export * from './mail-message.model';
+export * from './unit.model';
+export * from './units.model';
+export * from './number-of-unit.model';

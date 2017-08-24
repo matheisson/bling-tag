@@ -64,10 +64,28 @@
   <div *ngIf="result" class="result-container">
     <h4 class="title">What a deal would THAT be!</h4>
     <p class="long-text">
-      You could get {{ result.numberOfCommodities.toFixed(1) }} of {{ result.commodity.name }}s for
-      your {{ numberOfShares }} {{ result.firm.name }} shares.
+      {{ result.commodity.name }}<br>
+      From {{ result.numberOfShares }} {{ result.firm.name }} shares
+    </p>
+    <p *ngFor="let unit of result.numberOfUnits">
+      {{unit.number}} {{unit.name}}
     </p>
     <img src="{{result.commodity.picture_url}}" height="250" width="250" class="img-rounded">
+
+      <div class="measurement">
+        <p>Choose measurement system</p>
+        <button *ngFor="let units of relatedUnits" (click)="selectUnits(units)">
+          {{units.name}}
+        </button>
+      </div>
+
+      <div class="unit" *ngIf="chosenUnits">
+        <p>Choose unit</p>
+        <button *ngFor="let unit of chosenUnits.list_of_units" (click)="selectUnit(unit)">
+          {{unit.name}}
+        </button>
+      </div>
+
     <div class="row input-container">
       <input placeholder="Share it with... (email)" [(ngModel)]="mailMessage.email" class="form-control"/>
     </div>
