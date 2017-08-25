@@ -17,6 +17,20 @@
   text-align: center;
 }
 
+.unit-container {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin-left: 20%;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  color: #555;
+}
+
+.result-commodity {
+  text-align: center;
+}
+
 .title {
   text-align: center;
   color: purple;

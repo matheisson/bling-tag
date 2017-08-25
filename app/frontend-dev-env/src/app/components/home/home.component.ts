@@ -27,6 +27,7 @@ export class HomeComponent{
     public relatedUnits: Units[];
     public chosenUnits: Units;
     public chosenUnit: Unit;
+    public converterActive: boolean;
 
     constructor(
           private eventsManager: GlobalEventsManager,
@@ -89,6 +90,10 @@ export class HomeComponent{
         this.getUnits();
     }
 
+    toggleConverter(){
+        this.converterActive = !this.converterActive;
+    }
+
     getCommoditySelector(){
         this.commoditySelectorActive = true;
     }
@@ -104,7 +109,7 @@ export class HomeComponent{
         let numberOfUnits = [];
         if (this.chosenUnit){
           let number = ((this.numberOfShares * this.selectedFirm.stock_price) / this.chosenCommodity.price) / this.chosenUnit.multiplier;
-          let numberOfUnit = new NumberOfUnit(this.chosenUnit.name, number);
+          let numberOfUnit = new NumberOfUnit(this.chosenUnit.name, Math.trunc(number));
           numberOfUnits.push(numberOfUnit);
         } else {
           let initialValue = this.numberOfShares * this.selectedFirm.stock_price
@@ -129,6 +134,7 @@ export class HomeComponent{
         this.unitService.getRelatedUnits(this.chosenCommodity).subscribe(
             (data: any) => {
                 let parsedData = data["units"].map((units) => {
+                    console.log(units.list_of_units);
                     units.list_of_units = JSON.parse(units.list_of_units).sort((e1, e2) => e2.multiplier - e1.multiplier);
                     return units;
                 })
@@ -145,6 +151,7 @@ export class HomeComponent{
 
     selectUnits(units: Units){
         this.chosenUnits = units;
+        this.chosenUnit = null;
         this.createResult()
     }
 
