@@ -66,15 +66,19 @@ def send_email(request):
     if request.method == 'POST':
         try:
             body = json.loads(request.body.decode("utf-8"))
+            commodities = ''
+
+            for unit in body['numberOfUnits']:
+                commodities = str(unit['number']) + " " + unit['name']
+
             html_content = render_to_string('template.html',
                                             {
                                                 'name': body['username'],
                                                 'short': body['short_name'],
-                                                'piece': str(body['piece']),
-                                                'value': str(body['value']),
+                                                'piece': str(body['value']),
+                                                'value': commodities,
                                                 'commodity': body['commodity'],
                                             })
-
 
             text_content = strip_tags(html_content)
             msg = EmailMultiAlternatives("Check what I found!", text_content, settings.DEFAULT_FROM_EMAIL, [body['email']])
