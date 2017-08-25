@@ -60,3 +60,6 @@ class CommodityUnitRelation(models.Model):
 
     commodity = models.ForeignKey(Commodity, on_delete=models.CASCADE)
     unit = models.ForeignKey(Units, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'for ' + self.commodity.name + " " + self.unit.name + " will be fetched."

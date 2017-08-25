@@ -2,6 +2,10 @@ from App_Stock.models import *
 
 
 def create_commodities():
+    CommodityUnitRelation.objects.all().delete()
+    Commodity.objects.all().delete()
+    Units.objects.all().delete()
+
     beer = Commodity(name="Beer", price=5, picture_url='http://www.menshealth.com/sites/menshealth.com/files/beer-main_0.jpg/static/pics/beer.jpg')
     beer.save()
     coke = Commodity(name="Cocaine", price=120, picture_url='http://drugabuse.com/wp-content/uploads/drugabuse-shutterstock220086538-cocaine_feature_image-cocaine.jpg')
@@ -53,11 +57,11 @@ def create_commodities():
     date.save()
 
     # only Silver!!
-    tael = Units(name="Tael", list_of_units='{"name": "Treasury Standard", "multiplier": 0.026659557451346308}')
+    tael = Units(name="Tael", list_of_units='[{"name": "Treasury Standard", "multiplier": 0.026659557451346308}]')
     tael.save()
 
     # multiply gram!!!
-    tola = Units(name="Tola", list_of_units='{"name": "Indian Tola", "multiplier": 0.085735260233307}')
+    tola = Units(name="Tola", list_of_units='[{"name": "Indian Tola", "multiplier": 0.085735260233307}]')
     tola.save()
 
     gold_troy = CommodityUnitRelation(commodity=gold, unit=troy)
@@ -77,8 +81,6 @@ def create_commodities():
 
     tokyo_tsubo = CommodityUnitRelation(commodity=tokyo, unit=jap_area)
     tokyo_tsubo.save()
-    tokyo_met = CommodityUnitRelation(commodity=tokyo, unit=metric)
-    tokyo_met.save()
     tokyo_eng = CommodityUnitRelation(commodity=tokyo, unit=english_area)
     tokyo_eng.save()
 
