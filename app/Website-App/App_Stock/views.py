@@ -69,8 +69,9 @@ def send_email(request):
             commodities = ''
 
             for unit in body['numberOfUnits']:
-                commodities = str(unit['number']) + " " + unit['name']
+                commodities += " " + str(unit['number']) + " " + unit['name']
 
+            print(commodities)
             html_content = render_to_string('template.html',
                                             {
                                                 'name': body['username'],
