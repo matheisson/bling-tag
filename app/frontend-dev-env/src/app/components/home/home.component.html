@@ -63,28 +63,47 @@
   </div>
   <div *ngIf="result" class="result-container">
     <h4 class="title">What a deal would THAT be!</h4>
-    <p class="long-text">
-      {{ result.commodity.name }}<br>
-      From {{ result.numberOfShares }} {{ result.firm.name }} shares
-    </p>
-    <p *ngFor="let unit of result.numberOfUnits">
-      {{unit.number}} {{unit.name}}
-    </p>
+    <div class="long-text">
+      <p class="result-commodity">{{ result.commodity.name }}</p>
+      <p>From {{ result.numberOfShares }} {{ result.firm.name }} shares</p>
+    </div>
     <img src="{{result.commodity.picture_url}}" height="250" width="250" class="img-rounded">
 
+    <div *ngFor="let unit of result.numberOfUnits" class="unit-container">
+      <span>{{unit.number}}</span><span>{{unit.name}}</span>
+    </div>
+
+    <div class="row button-container" *ngIf="!converterActive">
+      <button (click)="toggleConverter()" class="btn btn-info">
+        Convert
+      </button>
+    </div>
+
+    <div class="row button-container" *ngIf="converterActive">
+      <button (click)="toggleConverter()" class="btn btn-info">
+        Close Converter
+      </button>
+    </div>
+
+    <div *ngIf="converterActive">
       <div class="measurement">
-        <p>Choose measurement system</p>
-        <button *ngFor="let units of relatedUnits" (click)="selectUnits(units)">
-          {{units.name}}
-        </button>
+        <hr>
+        <div *ngFor="let units of relatedUnits" class="row button-container">
+          <button (click)="selectUnits(units)" class="btn btn-info">
+            {{units.name}}
+          </button>
+        </div>
       </div>
 
       <div class="unit" *ngIf="chosenUnits">
-        <p>Choose unit</p>
-        <button *ngFor="let unit of chosenUnits.list_of_units" (click)="selectUnit(unit)">
-          {{unit.name}}
-        </button>
+        <hr>
+        <div *ngFor="let unit of chosenUnits.list_of_units" class="row button-container">
+          <button (click)="selectUnit(unit)" class="btn btn-info">
+            {{unit.name}}
+          </button>
+        </div>
       </div>
+    </div>
 
     <div class="row input-container">
       <input placeholder="Share it with... (email)" [(ngModel)]="mailMessage.email" class="form-control"/>
