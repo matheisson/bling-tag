@@ -51,3 +51,27 @@ class DetailsRequest:
             return request
         except:
             return None
+
+class PaymentDataRequest:
+
+    auth_status = "user"
+    request_method = "GET"
+
+    def get_from_request(self, request):
+        try:
+            return request
+        except:
+            return None
+
+
+class PaymentRequest:
+
+    auth_status = "user"
+    request_method = "POST"
+
+    def get_from_request(self, request):
+        try:
+            request.hash = json.loads(request.body.decode('utf-8'))["hash"]
+            return request
+        except:
+            return None

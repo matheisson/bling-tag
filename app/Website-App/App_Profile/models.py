@@ -20,7 +20,9 @@ class ProfileManager(models.Manager):
 class Profile(models.Model):
 
     user_obj = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_paid = models.BooleanField(default=False)
+    txn_hash = models.CharField(max_length=255)
+    price = models.FloatField()
+    is_accepted = models.BooleanField(default=None, null=True)
 
     objects = ProfileManager()
 
